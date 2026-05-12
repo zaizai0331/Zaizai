@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>麗緻車體鍍膜｜水晶鍍膜專案</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Cormorant+Garamond:wght@400;600;700&family=Oswald:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --stone:      #b0a99a;
+    --stone-light:#d6d0c6;
+    --stone-dim:  #6e6860;
+    --vein:       #c8bfb0;
+    --bg:         #f2efe9;
+    --bg2:        #e8e3db;
+    --bg3:        #ddd8cf;
+    --panel:      #ececE6;
+    --panel2:     #e0dbd2;
+    --charcoal:   #2c2a26;
+    --ink:        #3e3b36;
+    --ink-dim:    #7a756c;
+    --accent:     #8a7d6a;
+    --red:        #b04040;
+    --white:      #faf8f4;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Noto Serif TC', serif;
+    font-weight: 700;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* === MARBLE SVG BACKGROUND === */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='800'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012 0.018' numOctaves='6' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='0.18' intercept='0.78'/%3E%3CfeFuncG type='linear' slope='0.15' intercept='0.76'/%3E%3CfeFuncB type='linear' slope='0.12' intercept='0.72'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='800' height='800' filter='url(%23m)'/%3E%3C/svg%3E");
+    background-size: 800px 800px;
+    opacity: 0.55;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Subtle vein lines */
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      repeating-linear-gradient(
+        118deg,
+        transparent 0px,
+        transparent 120px,
+        rgba(180,170,155,0.13) 121px,
+        transparent 122px,
+        transparent 280px,
+        rgba(160,150,135,0.08) 281px,
+        transparent 282px
+      ),
+      repeating-linear-gradient(
+        52deg,
+        transparent 0px,
+        transparent 200px,
+        rgba(190,180,165,0.10) 201px,
+        transparent 202px
+      );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrapper {
+    position: relative; z-index: 1;
+    max-width: 900px; margin: 0 auto;
+    padding: 48px 24px 72px;
+  }
+
+  /* === HEADER === */
+  header { text-align: center; margin-bottom: 52px; animation: fadeDown 0.9s ease both; }
+
+  .brand {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px; letter-spacing: 5px;
+    color: var(--stone-dim);
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  .brand::before, .brand::after {
+    content: '';
+    display: inline-block; width: 36px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--stone-dim));
+  }
+  .brand::after { background: linear-gradient(90deg, var(--stone-dim), transparent); }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(42px, 10vw, 80px);
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    line-height: 1;
+    color: var(--charcoal);
+    text-shadow: 0 1px 0 rgba(255,255,255,0.6), 0 -1px 0 rgba(0,0,0,0.08);
+    margin-bottom: 10px;
+  }
+
+  .subtitle {
+    font-size: 13px; color: var(--ink-dim); letter-spacing: 2px;
+    line-height: 2.2; text-align: center;
+    font-weight: 700;
+  }
+  .subtitle em { color: var(--accent); font-style: normal; font-weight: 700; }
+
+  /* === MARBLE HEADER RULE === */
+  .header-rule {
+    width: 120px; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--stone), transparent);
+    margin: 16px auto 0;
+  }
+
+  /* === TABS === */
+  .tabs {
+    display: flex;
+    border: 1px solid var(--bg3);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 40px;
+    animation: fadeUp 0.8s 0.2s ease both;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.7);
+  }
+
+  .tab-btn {
+    flex: 1;
+    padding: 18px 10px;
+    background: var(--panel);
+    border: none;
+    color: var(--ink-dim);
+    font-family: 'Noto Serif TC', serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    cursor: pointer;
+    transition: all 0.35s;
+    position: relative;
+    border-right: 1px solid var(--bg3);
+  }
+  .tab-btn:last-child { border-right: none; }
+
+  .tab-btn .year-badge {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--ink-dim);
+    transition: all 0.35s;
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+
+  .tab-btn:hover {
+    background: var(--bg2);
+    color: var(--charcoal);
+  }
+  .tab-btn:hover .year-badge { color: var(--charcoal); }
+
+  .tab-btn.active {
+    background: var(--white);
+    color: var(--charcoal);
+  }
+  .tab-btn.active .year-badge { color: var(--charcoal); }
+  .tab-btn.active::after {
+    content: '';
+    position: absolute; bottom: 0; left: 10%; right: 10%; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--stone), transparent);
+  }
+
+  /* === PANEL === */
+  .panel { display: none; animation: fadeUp 0.4s ease both; }
+  .panel.active { display: block; }
+
+  /* === PERKS === */
+  .perks { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 28px; }
+  .perk {
+    background: var(--white);
+    border: 1px solid var(--bg3);
+    border-radius: 2px;
+    padding: 8px 16px;
+    font-size: 12px; letter-spacing: 1.5px;
+    color: var(--accent);
+    display: flex; align-items: center; gap: 7px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .perk::before { content: '◆'; font-size: 7px; }
+
+  /* === PRICE CARDS === */
+  .price-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
+
+  .price-card {
+    background: var(--white);
+    border: 1px solid var(--bg3);
+    border-radius: 3px;
+    display: grid;
+    grid-template-columns: 68px 1fr auto auto;
+    align-items: center;
+    gap: 0;
+    overflow: hidden;
+    transition: transform 0.25s, box-shadow 0.25s;
+    animation: slideIn 0.5s ease both;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.9);
+  }
+  .price-card:nth-child(1) { animation-delay: 0.05s; }
+  .price-card:nth-child(2) { animation-delay: 0.1s; }
+  .price-card:nth-child(3) { animation-delay: 0.15s; }
+  .price-card:nth-child(4) { animation-delay: 0.2s; }
+  .price-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.10), inset 0 1px 0 rgba(255,255,255,0.9);
+  }
+
+  .car-icon {
+    display: flex; align-items: center; justify-content: center;
+    padding: 18px 0;
+    background: var(--bg2);
+    border-right: 1px solid var(--bg3);
+    font-size: 26px;
+    height: 100%;
+  }
+
+  .car-label {
+    padding: 18px 22px;
+    font-family: 'Noto Serif TC', serif;
+    font-size: 19px; font-weight: 700; letter-spacing: 3px;
+    color: var(--charcoal);
+  }
+
+  .price-orig {
+    padding: 18px 16px;
+    text-align: center;
+    border-left: 1px solid var(--bg3);
+  }
+  .price-orig .label { font-size: 9px; color: var(--ink-dim); letter-spacing: 2px; margin-bottom: 5px; }
+  .price-orig .amount {
+    font-family: 'Oswald', sans-serif; font-size: 20px; font-weight: 400;
+    color: var(--stone-dim); text-decoration: line-through;
+    text-decoration-color: var(--stone);
+  }
+
+  .price-new {
+    padding: 18px 22px;
+    text-align: center;
+    background: linear-gradient(160deg, var(--bg2), var(--bg3));
+    border-left: 1px solid var(--bg3);
+    min-width: 138px;
+  }
+  .price-new .label { font-size: 9px; color: var(--accent); letter-spacing: 2px; margin-bottom: 5px; }
+  .price-new .amount {
+    font-family: 'Oswald', sans-serif; font-size: 26px; font-weight: 700;
+    color: var(--red);
+  }
+
+  /* === POLISH === */
+  .polish-section {
+    background: var(--white);
+    border: 1px solid var(--bg3);
+    border-radius: 3px;
+    padding: 20px 26px;
+    margin-bottom: 28px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+  }
+  .polish-row {
+    display: flex; align-items: baseline; gap: 14px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--bg3);
+    font-size: 14px;
+  }
+  .polish-row:last-child { border-bottom: none; }
+  .polish-tag {
+    font-size: 11px; padding: 3px 9px;
+    background: var(--bg2);
+    border: 1px solid var(--bg3);
+    border-radius: 2px; color: var(--accent); white-space: nowrap; letter-spacing: 1px;
+  }
+  .polish-desc em { color: var(--charcoal); font-style: normal; font-weight: 700; }
+
+  /* === DIVIDER === */
+  .divider {
+    display: flex; align-items: center; gap: 14px;
+    margin: 26px 0;
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--stone-dim); font-size: 11px; letter-spacing: 4px;
+  }
+  .divider::before, .divider::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--bg3));
+  }
+  .divider::after { background: linear-gradient(90deg, var(--bg3), transparent); }
+
+  /* === BENEFITS === */
+  .benefits {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 10px; margin-bottom: 28px;
+  }
+  @media (max-width: 500px) { .benefits { grid-template-columns: 1fr; } }
+
+  .benefit {
+    background: var(--white);
+    border: 1px solid var(--bg3);
+    border-radius: 3px;
+    padding: 16px 18px;
+    font-size: 13px; line-height: 1.8;
+    color: var(--ink-dim);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+  .benefit strong {
+    color: var(--charcoal); display: block; margin-bottom: 4px;
+    font-size: 12px; letter-spacing: 1px; font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+  }
+
+  /* === CTA === */
+  .cta {
+    text-align: center;
+    padding: 30px;
+    background: var(--white);
+    border: 1px solid var(--bg3);
+    border-radius: 3px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07), inset 0 1px 0 rgba(255,255,255,1);
+    position: relative; overflow: hidden;
+  }
+  .cta::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(200,190,175,0.15) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .cta-line { font-size: 12px; color: var(--ink-dim); margin-bottom: 8px; letter-spacing: 3px; }
+  .cta-id {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px; font-weight: 700;
+    color: var(--charcoal); letter-spacing: 5px;
+    margin-bottom: 20px;
+  }
+
+  .line-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    margin-top: 4px;
+    padding: 13px 28px;
+    background: #06C755;
+    color: #fff;
+    font-family: 'Noto Serif TC', serif;
+    font-size: 14px; font-weight: 700; letter-spacing: 2px;
+    text-decoration: none;
+    border-radius: 4px;
+    box-shadow: 0 3px 12px rgba(6,199,85,0.35);
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+  }
+  .line-btn svg { flex-shrink: 0; }
+  .line-btn:hover {
+    background: #05b34c;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(6,199,85,0.45);
+  }
+
+  /* === ANIMATIONS === */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-10px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  @media (max-width: 600px) {
+    .price-card { grid-template-columns: 54px 1fr auto; }
+    .price-orig { display: none; }
+    .price-new { min-width: 108px; }
+    .price-new .amount { font-size: 20px; }
+    .car-label { font-size: 16px; padding: 14px 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <header>
+    <div class="brand">麗緻車體鍍膜&nbsp;&nbsp;Car Detailing</div>
+    <h1>水晶鍍膜</h1>
+    <p class="subtitle">車體三層鍍膜專案<br>新車認定：<em>里程 1500km 以內</em>，且車體無明顯細紋</p>
+    <div class="header-rule"></div>
+  </header>
+
+  <!-- TABS -->
+  <div class="tabs" role="tablist">
+    <button class="tab-btn active" role="tab" onclick="switchTab(this, '3yr')" aria-selected="true">
+      <span class="year-badge">3</span>年效期
+    </button>
+    <button class="tab-btn" role="tab" onclick="switchTab(this, '2yr')" aria-selected="false">
+      <span class="year-badge">2</span>年效期
+    </button>
+  </div>
+
+  <!-- ====== 3 YEAR PANEL ====== -->
+  <div class="panel active" id="panel-3yr">
+
+    <div class="perks">
+      <span class="perk">無條件免費補鍍膜</span>
+      <span class="perk">局部刮傷免費修復</span>
+      <span class="perk">需搭配車體保養</span>
+    </div>
+
+    <div class="price-list">
+      <div class="price-card">
+        <div class="car-icon">🚗</div>
+        <div class="car-label">小型車</div>
+        <div class="price-orig"><div class="label">一般價</div><div class="amount">$14,000</div></div>
+        <div class="price-new"><div class="label">新 車 價</div><div class="amount">$10,500</div></div>
+      </div>
+      <div class="price-card">
+        <div class="car-icon">🚙</div>
+        <div class="car-label">中型車</div>
+        <div class="price-orig"><div class="label">一般價</div><div class="amount">$15,000</div></div>
+        <div class="price-new"><div class="label">新 車 價</div><div class="amount">$11,500</div></div>
+      </div>
+      <div class="price-card">
+        <div class="car-icon">🚐</div>
+        <div class="car-label">大型車</div>
+        <div class="price-orig"><div class="label">一般價</div><div class="amount">$17,500</div></div>
+        <div class="price-new"><div class="label">新 車 價</div><div class="amount">$14,500</div></div>
+      </div>
+      <div class="price-card">
+        <div class="car-icon">🚌</div>
+        <div class="car-label">特大型車</div>
+        <div class="price-orig"><div class="label">一般價</div><div class="amount">$23,000</div></div>
+        <div class="price-new"><div class="label">新 車 價</div><div class="amount">$20,000</div></div>
+      </div>
+    </div>
+
+    <div class="polish-section">
+      <div class="polish-row">
+        <span class="polish-tag">非新車搭配</span>
+        <span class="polish-desc"><em>多層次 90%UP 除紋拋光</em></span>
+      </div>
+      <div class="polish-row">
+        <span class="polish-tag">新車搭配</span>
+        <span class="polish-desc"><em>增豔高光澤拋光</em></span>
+      </div>
+    </div>
+
+    <div class="divider">服務效益</div>
+
+    <div class="benefits">
+      <div class="benefit"><strong>✦ 極致鏡面光澤</strong>讓車漆更鮮豔透亮，視覺上更加新穎動感。</div>
+      <div class="benefit"><strong>✦ 強化漆面保護</strong>減少氧化、抗 UV、降低髒污附著，延長車漆壽命。</div>
+      <div class="benefit"><strong>✦ 撥水防灰效果</strong>雨水、灰塵不易殘留，清潔更輕鬆，保持長效亮麗。</div>
+      <div class="benefit"><strong>✦ 減少細微刮痕</strong>修復細紋與渦流紋，讓車身更平滑細緻。</div>
+    </div>
+
+    <div class="cta">
+      <div class="cta-line">預約 / 優惠請加官方 LINE</div>
+      <div class="cta-id">@coollong25</div>
+      <a class="line-btn" href="https://lin.ee/cK4Jgrc" target="_blank" rel="noopener">
+        <svg width="22" height="22" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" rx="12" fill="#06C755"/><path d="M40 22.2c0-7.28-7.3-13.2-16-13.2S8 14.92 8 22.2c0 6.52 5.78 11.98 13.6 13.02.53.11 1.25.35 1.43.8.16.41.1 1.05.05 1.46l-.23 1.38c-.07.41-.33 1.62 1.42.88 1.75-.74 9.44-5.56 12.88-9.52C39.2 27.84 40 25.14 40 22.2z" fill="white"/><path d="M20.3 19.1h-1.1a.3.3 0 00-.3.3v6.8c0 .17.13.3.3.3h1.1c.17 0 .3-.13.3-.3v-6.8a.3.3 0 00-.3-.3zM28.9 19.1h-1.1a.3.3 0 00-.3.3v4.04l-3.12-4.2a.32.32 0 00-.25-.14h-1.1a.3.3 0 00-.3.3v6.8c0 .17.13.3.3.3h1.1c.17 0 .3-.13.3-.3V22.1l3.13 4.2c.06.08.14.13.24.13h1.1c.17 0 .3-.13.3-.3v-6.8a.3.3 0 00-.3-.3zM17.3 24.5h-2.8v-5.1a.3.3 0 00-.3-.3h-1.1a.3.3 0 00-.3.3v6.8c0 .08.03.15.08.2.05.06.13.1.22.1h4.2c.17 0 .3-.13.3-.3v-1.4a.3.3 0 00-.3-.3zM34.9 20.8c.17 0 .3-.13.3-.3v-1.1a.3.3 0 00-.3-.3h-4.2a.32.32 0 00-.22.09.3.3 0 00-.08.21v6.8c0 .08.03.15.08.2.05.06.13.1.22.1h4.2c.17 0 .3-.13.3-.3v-1.1a.3.3 0 00-.3-.3h-2.8v-1.1h2.8c.17 0 .3-.13.3-.3v-1.1a.3.3 0 00-.3-.3h-2.8v-1.1h2.8z" fill="#06C755"/></svg>
+        加入官方 LINE 諮詢 / 預約
+      </a>
+    </div>
+  </div>
+
+  <!-- ====== 2 YEAR PANEL ====== -->
+  <div class="panel" id="panel-2yr">
+
+    <div class="perks">
+      <span class="perk">無條件免費補鍍膜</span>
+      <span class="perk">局部刮傷免費修復</span>
+      <span class="perk">需搭配車體保養</span>
+    </div>
+
+    <div class="price-list">
+      <div class="price-card">
+        <div class="car-icon">🚗</div>
+        <div class="car-label">小型車</div>
+        <div class="price-orig"><div class="label">一般價</div><div class="amount">$12,000</div></div>
+        <div class="price-new"><div class="label">新 車 價</div><div class="amount">$8,500</div></div>
+      </div>
+      <div class="price-card">
+        <div class="car-icon">🚙</div>
+        <div class="car-label">中型車</div>
+        <div class="price-orig"><div class="label">一般價</div><div class="amount">$13,000</div></div>
+        <div class="price-new"><div class="label">新 車 價</div><div class="amount">$9,500</div></div>
+      </div>
+      <div class="price-card">
+        <div class="car-icon">🚐</div>
+        <div class="car-label">大型車</div>
+        <div class="price-orig"><div class="label">一般價</div><div class="amount">$15,000</div></div>
+        <div class="price-new"><div class="label">新 車 價</div><div class="amount">$11,500</div></div>
+      </div>
+      <div class="price-card">
+        <div class="car-icon">🚌</div>
+        <div class="car-label">特大型車</div>
+        <div class="price-orig"><div class="label">一般價</div><div class="amount">$20,000</div></div>
+        <div class="price-new"><div class="label">新 車 價</div><div class="amount">$18,000</div></div>
+      </div>
+    </div>
+
+    <div class="polish-section">
+      <div class="polish-row">
+        <span class="polish-tag">非新車搭配</span>
+        <span class="polish-desc"><em>多層次 90%UP 除紋拋光</em></span>
+      </div>
+      <div class="polish-row">
+        <span class="polish-tag">新車搭配</span>
+        <span class="polish-desc"><em>增豔高光澤拋光</em></span>
+      </div>
+    </div>
+
+    <div class="divider">服務效益</div>
+
+    <div class="benefits">
+      <div class="benefit"><strong>✦ 極致鏡面光澤</strong>讓車漆更鮮豔透亮，視覺上更加新穎動感。</div>
+      <div class="benefit"><strong>✦ 強化漆面保護</strong>減少氧化、抗 UV、降低髒污附著，延長車漆壽命。</div>
+      <div class="benefit"><strong>✦ 撥水防灰效果</strong>雨水、灰塵不易殘留，清潔更輕鬆，保持長效亮麗。</div>
+      <div class="benefit"><strong>✦ 減少細微刮痕</strong>修復細紋與渦流紋，讓車身更平滑細緻。</div>
+    </div>
+
+    <div class="cta">
+      <div class="cta-line">預約 / 優惠請加官方 LINE</div>
+      <div class="cta-id">@coollong25</div>
+      <a class="line-btn" href="https://lin.ee/cK4Jgrc" target="_blank" rel="noopener">
+        <svg width="22" height="22" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" rx="12" fill="#06C755"/><path d="M40 22.2c0-7.28-7.3-13.2-16-13.2S8 14.92 8 22.2c0 6.52 5.78 11.98 13.6 13.02.53.11 1.25.35 1.43.8.16.41.1 1.05.05 1.46l-.23 1.38c-.07.41-.33 1.62 1.42.88 1.75-.74 9.44-5.56 12.88-9.52C39.2 27.84 40 25.14 40 22.2z" fill="white"/><path d="M20.3 19.1h-1.1a.3.3 0 00-.3.3v6.8c0 .17.13.3.3.3h1.1c.17 0 .3-.13.3-.3v-6.8a.3.3 0 00-.3-.3zM28.9 19.1h-1.1a.3.3 0 00-.3.3v4.04l-3.12-4.2a.32.32 0 00-.25-.14h-1.1a.3.3 0 00-.3.3v6.8c0 .17.13.3.3.3h1.1c.17 0 .3-.13.3-.3V22.1l3.13 4.2c.06.08.14.13.24.13h1.1c.17 0 .3-.13.3-.3v-6.8a.3.3 0 00-.3-.3zM17.3 24.5h-2.8v-5.1a.3.3 0 00-.3-.3h-1.1a.3.3 0 00-.3.3v6.8c0 .08.03.15.08.2.05.06.13.1.22.1h4.2c.17 0 .3-.13.3-.3v-1.4a.3.3 0 00-.3-.3zM34.9 20.8c.17 0 .3-.13.3-.3v-1.1a.3.3 0 00-.3-.3h-4.2a.32.32 0 00-.22.09.3.3 0 00-.08.21v6.8c0 .08.03.15.08.2.05.06.13.1.22.1h4.2c.17 0 .3-.13.3-.3v-1.1a.3.3 0 00-.3-.3h-2.8v-1.1h2.8c.17 0 .3-.13.3-.3v-1.1a.3.3 0 00-.3-.3h-2.8v-1.1h2.8z" fill="#06C755"/></svg>
+        加入官方 LINE 諮詢 / 預約
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function switchTab(btn, id) {
+    document.querySelectorAll('.tab-btn').forEach(b => {
+      b.classList.remove('active');
+      b.setAttribute('aria-selected', 'false');
+    });
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected', 'true');
+    document.getElementById('panel-' + id).classList.add('active');
+  }
+</script>
+</body>
+</html>
